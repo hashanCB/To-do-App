@@ -1,7 +1,14 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const Show_Task = () => {
+  const [Todo, SetDoto] = useState([]);
+
+  const handlerdotoadd = (newtask) => {
+    SetDoto([...prevarray, newtask]);
+    console.log(Todo);
+  };
   return (
     <div className=" w-full  flex  justify-center pt-3">
       <div className="w-full max-w-[500px] rounded-lg shadow-lg bg-gradient-to-r from-green-600 to-yellow-600 h-[40px] flex items-center px-2">

@@ -6,21 +6,17 @@ import Show_Task from "./Show_Task";
 const Todo_Home = () => {
   const [Todo, setTodo] = useState([]);
 
-  const TodoAdd = (addvale) => {
-    // console.log(addvale);
-    setTodo((prevtodo) => {
-      const newvalue = [...prevtodo, addvale];
-      console.log(Todo);
-      return newvalue;
+  const addTask = (name) => {
+    setTodo((prev) => {
+      const newarray = [...prev, name];
+      return newarray;
     });
   };
-
-  console.log(Todo);
   return (
     <div className=" absolute max-w-[550px] w-full flex flex-col bg-black min-h-[550px] rounded-lg  ">
-      <Add_Task add={TodoAdd} />
+      <Add_Task addtask={addTask} />
       <div className=" pt-8">
-        <Show_Task listt={[...Todo]} />
+        <Show_Task array={[...Todo]} />
       </div>
     </div>
   );

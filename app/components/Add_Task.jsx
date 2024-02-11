@@ -1,35 +1,63 @@
 "use client";
-import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, { useRef, useState } from "react";
+import * as Yup from "yup";
 
-const Add_Task = ({ add }) => {
-  const [namevaue, setnamevalue] = useState("");
-  const handler = (values) => {
-    setnamevalue(values);
+const Add_Task = ({ addtask }) => {
+  const [addTodo, setAddTodo] = useState(" ");
+  const refInput = useRef();
+
+  const setTodo = (valuename) => {
+    if (valuename === "") {
+      console.log("error");
+    } else {
+      setAddTodo(valuename);
+    }
   };
-  const passperent = () => {
-    add(namevaue);
-    setnamevalue("");
+  const handleb = () => {
+    setAddTodo("");
+    if (addTodo.trim() === "") {
+      console.log("enter value red");
+      // refInput.current.focus();
+    } else {
+      addtask(addTodo);
+      refInput.current.style.borderColor = "";
+    }
   };
   return (
     <div className=" w-full">
-      <div className=" w-full px-8  gap-4 pt-[30px] flex ">
-        <input
-          type="text"
-          placeholder="Enter your task"
-          className=" w-full h-[40px] rounded-md pl-5 focus:outline-none"
-          onChange={(e) => handler(e.target.value)}
-        />
-        <div
-          className=" bg-red-400 min-w-[100px] py-2 text-center rounded-lg cursor-pointer "
-          onClick={passperent}
-        >
-          <input
-            type="submit"
-            value="ADD"
-            className=" text-white font-semibold "
-          />
-        </div>
-      </div>
+      <Formik
+        initialValues={{ input: "" }}
+        validationSchema={Yup.object({
+          input: Yup.string().required("*Required"),
+        })}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+      >
+        <Form>
+          <div className=" w-full px-8  gap-4 pt-[30px] flex ">
+            <div className=" flex flex-col w-full">
+              <Field
+                type="text"
+                name="inputname"
+                className=" w-full h-[40px] rounded-md pl-5 "
+              />
+              <ErrorMessage
+                name="input"
+                className=" text-red-500"
+                component="div"
+              />
+            </div>
+
+            <div className=" bg-red-400 min-w-[100px] h-[42px] py-2 text-center rounded-lg cursor-pointer ">
+              <button type="submit" className=" text-white font-semibold ">
+                Submit
+              </button>
+            </div>
+          </div>
+        </Form>
+      </Formik>
     </div>
   );
 };

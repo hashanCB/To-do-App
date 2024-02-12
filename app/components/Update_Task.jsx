@@ -1,23 +1,16 @@
-"use client";
-
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { schema } from "../utils/Validetion/UserValidation";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-const Add_Task = ({ todoadd }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    resolver: yupResolver(schema),
+const Update_Task = ({ value, updatevalue, id }) => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      inputname: value,
+    },
   });
 
   const onSubmit = (data) => {
-    todoadd(data.inputname);
-    reset();
+    const newid = id;
+    updatevalue(data.inputname, newid);
   };
   return (
     <div className=" w-full">
@@ -30,12 +23,12 @@ const Add_Task = ({ todoadd }) => {
               className=" w-full h-[40px] rounded-md pl-5 "
               {...register("inputname")}
             />
-            <p className=" text-white"> {errors.inputname?.message}</p>
+            <p className=" text-white"> </p>
           </div>
 
           <div className=" bg-red-400 min-w-[100px] h-[42px] py-2 text-center rounded-lg cursor-pointer ">
             <button type="submit" className=" text-white font-semibold ">
-              Submit
+              Update
             </button>
           </div>
         </div>
@@ -44,4 +37,4 @@ const Add_Task = ({ todoadd }) => {
   );
 };
 
-export default Add_Task;
+export default Update_Task;
